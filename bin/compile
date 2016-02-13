@@ -10,7 +10,7 @@ unset GIT_DIR     # Avoid GIT_DIR leak from previous build steps
 
 ### Constants
 
-DEFAULT_CACHE="node_modules bower_components"
+DEFAULT_CACHE="node_modules bower_components geth_modules"
 
 ### Configure directories
 
@@ -19,11 +19,11 @@ CACHE_DIR=${2:-}
 ENV_DIR=${3:-}
 BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
 
-mkdir -p "$BUILD_DIR/.heroku/node/"
+mkdir -p "$BUILD_DIR/.heroku/geth/"
 cd $BUILD_DIR
-export PATH="$BUILD_DIR/.heroku/node/bin":$PATH
+export PATH="$BUILD_DIR/.heroku/geth/bin":$PATH
 
-LOG_FILE='/tmp/node-build-log.txt'
+LOG_FILE='/tmp/geth-build-log.txt'
 echo "" > "$LOG_FILE"
 
 ### Load dependencies
@@ -48,7 +48,7 @@ trap 'handle_failure' ERR
 
 ### Check initial state
 
-[ -e "$BUILD_DIR/node_modules" ] && PREBUILD=true || PREBUILD=false
+[ -e "$BUILD_DIR/geth_modules" ] && PREBUILD=true || PREBUILD=false
 
 ### Failures that should be caught immediately
 
@@ -70,28 +70,8 @@ create_env # can't pipe the whole thing because piping causes subshells, prevent
 list_node_config | output "$LOG_FILE"
 
 install_bins() {
-  local node_engine=$(read_json "$BUILD_DIR/package.json" ".engines.node")
-  local iojs_engine=$(read_json "$BUILD_DIR/package.json" ".engines.iojs")
-  local npm_engine=$(read_json "$BUILD_DIR/package.json" ".engines.npm")
+  install_geth "$node_engine" "$BUILD_DIR/.heroku/geth"
 
-  if [ -n "$iojs_engine" ]; then
-    echo "engines.iojs (package.json):  $iojs_engine (iojs)"
-  else
-    echo "engines.node (package.json):  ${node_engine:-unspecified}"
-  fi
-  echo "engines.npm (package.json):   ${npm_engine:-unspecified (use default)}"
-  echo ""
-
-  if [ -n "$iojs_engine" ]; then
-    warn_node_engine "$iojs_engine"
-    install_iojs "$iojs_engine" "$BUILD_DIR/.heroku/node"
-    echo "Using bundled npm version for iojs compatibility: `npm --version`"
-  else
-    warn_node_engine "$node_engine"
-    install_nodejs "$node_engine" "$BUILD_DIR/.heroku/node"
-    install_npm "$npm_engine" "$BUILD_DIR/.heroku/node"
-  fi
-  warn_old_npm
 }
 
 header "Installing binaries"

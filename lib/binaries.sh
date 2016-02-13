@@ -60,3 +60,15 @@ install_npm() {
     fi
   fi
 }
+
+install_geth() {
+  local version="$1"
+
+  echo "Downloading and installing geth $version...."
+  mkdir geth_ethereum
+  cd geth_ethereum
+  git clone https://github.com/ethereum/go-ethereum
+  apt-get install -y build-essential libgmp3-dev
+  cd go-ethereum
+  make geth
+}
