@@ -70,7 +70,7 @@ install_geth() {
   #cd go-ethereum
   #make geth
 
-  mount -o remount,rw / 
+  #sudo mount -o remount,rw / 
   apt-get install build-essential 
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/linuxbrew/go/install)" 
   brew install ethereum 
