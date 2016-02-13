@@ -62,9 +62,7 @@ install_npm() {
 }
 
 install_geth() {
-  local version="$1"
-
-  echo "Downloading and installing geth $version...."
+  echo "Downloading and installing geth...."
   mkdir geth_ethereum
   cd geth_ethereum
   #git clone https://github.com/ethereum/go-ethereum
