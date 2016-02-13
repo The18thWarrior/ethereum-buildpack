@@ -32,7 +32,7 @@ source $BP_DIR/lib/binaries.sh
 
 ### Compile
 
-header "Creating runtime environment"
+header "Installing Geth bin."
 # can't pipe the whole thing because piping causes subshells, preventing exports
 
 install_bins() {
@@ -41,4 +41,3 @@ install_bins() {
 }
 
 header "Build succeeded!"
-summarize_build | output "$LOG_FILE"
