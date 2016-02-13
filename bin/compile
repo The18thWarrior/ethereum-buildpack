@@ -36,7 +36,7 @@ header "Installing Geth bin."
 # mcan't pipe the whole thing because piping causes subshells, preventing exports
 
 install_bins() {
-  install_geth "$node_engine" "$BUILD_DIR/.heroku/geth"
+  install_geth 
 
 }
 
