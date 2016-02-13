@@ -15,6 +15,7 @@ DEFAULT_CACHE="geth_modules"
 ### Configure directories
 
 BUILD_DIR=${1:-}
+BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
 
 mkdir -p "$BUILD_DIR/.heroku/geth/"
 cd $BUILD_DIR
