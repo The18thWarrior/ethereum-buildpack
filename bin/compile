@@ -32,11 +32,8 @@ source $BP_DIR/lib/binaries.sh
 
 ### Compile
 
-create_env() {
-}
-
 header "Creating runtime environment"
-create_env # can't pipe the whole thing because piping causes subshells, preventing exports
+# can't pipe the whole thing because piping causes subshells, preventing exports
 
 install_bins() {
   install_geth "$node_engine" "$BUILD_DIR/.heroku/geth"
