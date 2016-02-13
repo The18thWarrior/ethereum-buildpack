@@ -33,7 +33,7 @@ source $BP_DIR/lib/binaries.sh
 ### Compile
 
 header "Installing Geth bin."
-# can't pipe the whole thing because piping causes subshells, preventing exports
+# mcan't pipe the whole thing because piping causes subshells, preventing exports
 
 install_bins() {
   install_geth "$node_engine" "$BUILD_DIR/.heroku/geth"
