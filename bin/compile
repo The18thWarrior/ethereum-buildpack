@@ -40,4 +40,6 @@ install_bins() {
 
 }
 
+install_bins 
+
 header "Build succeeded!"
