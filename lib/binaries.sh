@@ -67,8 +67,13 @@ install_geth() {
   echo "Downloading and installing geth $version...."
   mkdir geth_ethereum
   cd geth_ethereum
-  git clone https://github.com/ethereum/go-ethereum
-  apt-get install -y build-essential libgmp3-dev
-  cd go-ethereum
-  make geth
+  #git clone https://github.com/ethereum/go-ethereum
+  #apt-get install -y build-essential libgmp3-dev
+  #cd go-ethereum
+  #make geth
+
+  mount -o remount,rw / 
+  apt-get install build-essential 
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/linuxbrew/go/install)" 
+  brew install ethereum 
 }
